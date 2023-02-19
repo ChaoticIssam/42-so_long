@@ -6,7 +6,7 @@
 /*   By: iszitoun <iszitoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:42:32 by iszitoun          #+#    #+#             */
-/*   Updated: 2023/02/16 18:41:39 by iszitoun         ###   ########.fr       */
+/*   Updated: 2023/02/19 04:43:56 by iszitoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,81 +14,90 @@
 
 void	right_key(t_s1 *m)
 {
-	if (m->sp[m->pos_y][m->pos_x + 1] != '1')
+	if (m->sp[m->pos_y][m->pos_x + 1] == '0')
+		looking_right(m);
+	else if (m->sp[m->pos_y][m->pos_x + 1] == 'E')
 	{
-		m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/Background.xpm",
+		floor_before_player(m);
+		m->sp[m->pos_y][m->pos_x] = '0';
+		put_exit(m);
+		m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/looking_right.xpm",
 				&m->w, &m->h);
-			mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, m->pos_x * 60, m->pos_y * 60);
-			m->sp[m->pos_y][m->pos_x] = '0';
-			
-				printf("D -> Old coordinates == %d, %d\n", m->pos_y, m->pos_x);
-			
-			m->pos_x++;
-
-				printf("D -> New coordinates == %d, %d\n", m->pos_y, m->pos_x);
-				
-			m->sp[m->pos_y][m->pos_x] = 'P';
-			m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/looking_right.xpm",
-					&m->w, &m->h);
-			mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, m->pos_x * 60, m->pos_y
-					* 60);
+		mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, (m->pos_x) * 60,
+				m->pos_y * 60);
+	}
+	else if (m->sp[m->pos_y][m->pos_x + 1] == 'C')
+	{
+		looking_right(m);
+		m->ball_count--;
 	}
 	return ;
 }
 
 void	left_key(t_s1 *m)
 {
-	if (m->sp[m->pos_y][m->pos_x - 1] != '1')
+	if (m->sp[m->pos_y][m->pos_x - 1] == '0')
+		looking_left(m);
+	else if (m->sp[m->pos_y][m->pos_x - 1] == 'E')
 	{
-		m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/Background.xpm",
+		floor_before_player(m);
+		m->sp[m->pos_y][m->pos_x] = '0';
+		put_exit(m);
+		m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/looking_left.xpm",
 				&m->w, &m->h);
-			mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, m->pos_x * 60, m->pos_y * 60);
-			m->sp[m->pos_y][m->pos_x] = '0';
-			m->pos_x--;
-
-				printf("D -> New coordinates == %d, %d\n", m->pos_y, m->pos_x);
-				
-			m->sp[m->pos_y][m->pos_x] = 'P';
-			m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/looking_left.xpm",
-					&m->w, &m->h);
-			mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, m->pos_x * 60, m->pos_y
-					* 60);
+		mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, (m->pos_x) * 60,
+				m->pos_y * 60);
 	}
+	else if (m->sp[m->pos_y][m->pos_x - 1] == 'C')
+	{
+		looking_left(m);
+		m->ball_count--;
+	}
+	
 	return ;
 }
 
 void	up_key(t_s1 *m)
 {
-	if (m->sp[m->pos_y - 1][m->pos_x] != '1')
+	if (m->sp[m->pos_y - 1][m->pos_x] == '0')
+		looking_up(m);
+	else if (m->sp[m->pos_y - 1][m->pos_x] == 'E')
 	{
-		m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/Background.xpm",
-		&m->w, &m->h);
-		mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, m->pos_x * 60, m->pos_y * 60);
+		floor_before_player(m);
 		m->sp[m->pos_y][m->pos_x] = '0';
-		m->pos_y--;
-		m->sp[m->pos_y][m->pos_x] = 'P';
+		put_exit(m);
 		m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/looking_up.xpm",
 				&m->w, &m->h);
-		mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, m->pos_x * 60, m->pos_y
-				* 60);
+		mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, (m->pos_x) * 60,
+				m->pos_y * 60);
+	}
+	else if (m->sp[m->pos_y - 1][m->pos_x] == 'C')
+	{
+		looking_up(m);
+		m->ball_count--;
 	}
 	return ;
 }
 
 void	down_key(t_s1 *m)
 {
-	if (m->sp[m->pos_y + 1][m->pos_x] != '1')
+	if (m->sp[m->pos_y + 1][m->pos_x] == '0')
+		looking_down(m);
+	else if (m->sp[m->pos_y + 1][m->pos_x] == 'E')
 	{
-		m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/Background.xpm",
-		&m->w, &m->h);
-		mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, m->pos_x * 60, m->pos_y * 60);
+		floor_before_player(m);
 		m->sp[m->pos_y][m->pos_x] = '0';
-		m->pos_y++;
-		m->sp[m->pos_y][m->pos_x] = 'P';
-		m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/Player.xpm",
-				&m->w, &m->h);
-		mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, m->pos_x * 60, m->pos_y
-				* 60);
+		put_exit(m);
+		m->xpm_img = mlx_xpm_file_to_image(m->mlx, "texture/Player.xpm", &m->w,
+				&m->h);
+		mlx_put_image_to_window(m->mlx, m->win, m->xpm_img, (m->pos_x) * 60,
+				m->pos_y * 60);
 	}
+	else if (m->sp[m->pos_y + 1][m->pos_x] == 'C')
+	{
+		looking_down(m);
+		m->ball_count--;
+	}
+	printf("%d\n", m->ball_count);
 	return ;
 }

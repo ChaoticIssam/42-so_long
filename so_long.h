@@ -6,7 +6,7 @@
 /*   By: iszitoun <iszitoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 22:30:07 by iszitoun          #+#    #+#             */
-/*   Updated: 2023/02/16 18:20:11 by iszitoun         ###   ########.fr       */
+/*   Updated: 2023/02/19 05:45:55 by iszitoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ typedef struct t_s1
 	int		j;
 	int		pos_x;
 	int		pos_y;
+	int		ex_i;
+	int		ex_j;
+	int		c_i;
+	int		c_j;
+	int		count;
+	int		ball_count;
 }			t_s1;
 
 char		*get_next_line(int fd);
@@ -62,8 +68,8 @@ void		check_sides(char **s);
 int			lines_r_equal(char **s);
 int			map_check(char **s);
 
-int			c_check(char **s);
-int			e_check(char **s);
+int			c_check(t_s1 *m);
+int			e_check(t_s1 *m);
 int			p_check(t_s1 *m);
 void		items_check(t_s1 *m);
 void		invalid_item(char **s);
@@ -74,6 +80,25 @@ void		right_key(t_s1 *m);
 void		left_key(t_s1 *m);
 void		up_key(t_s1 *m);
 void		down_key(t_s1 *m);
+
+void		floor_before_player(t_s1 *m);
+void		looking_right(t_s1 *m);
+void		looking_left(t_s1 *m);
+void		looking_up(t_s1 *m);
+void		looking_down(t_s1 *m);
+
+void		print_moves(t_s1 *m);
+
+int			put_image(t_s1 *m);
+void		put_floor(t_s1 *m);
+void		put_walls(t_s1 *m);
+void		for_exit(t_s1 *m);
+void		put_exit(t_s1 *m);
+// void		put_collectibles(t_s1 *m);
+void		put_player(t_s1 *m);
+
+void	for_collectible(t_s1 *m);
+void	put_collectibles(t_s1 *m);
 
 int			main(int ac, char **av);
 
